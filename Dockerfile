@@ -1,8 +1,9 @@
-FROM alpine:latest
-RUN apk add --update ca-certificates
+FROM golang:latest as build
+WORKDIR /go/src/github.com/kylegrantlucas/transmission-exporter
+COPY . .
+RUN go build -o app ./cmd/transmission-exporter
 
-ADD ./transmission-exporter /usr/bin/transmission-exporter
-
+FROM gcr.io/distroless/base
+COPY --from=build /go/src/github.com/kylegrantlucas/transmission-exporter /
 EXPOSE 19091
-
-ENTRYPOINT ["/usr/bin/transmission-exporter"]
+ENTRYPOINT ["/app"]
