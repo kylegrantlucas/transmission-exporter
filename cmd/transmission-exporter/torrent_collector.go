@@ -4,7 +4,7 @@ import (
 	"log"
 	"strconv"
 
-	transmission "github.com/metalmatze/transmission-exporter"
+	transmission "github.com/kylegrantlucas/transmission-exporter"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

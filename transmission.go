@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-const endpoint = "/transmission/rpc"
+const endpoint = "/rpc"
 
 type (
 	// User to authenticate with Transmission
@@ -27,9 +27,12 @@ type (
 )
 
 // New create new transmission torrent
-func New(url string, user *User) *Client {
+func New(url string, baseURL string, user *User) *Client {
+	if baseURL == "" {
+		baseURL = "/transmission"
+	}
 	return &Client{
-		URL:  url + endpoint,
+		URL:  url + baseURL + endpoint,
 		User: user,
 	}
 }

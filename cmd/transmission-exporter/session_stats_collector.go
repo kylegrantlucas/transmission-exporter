@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/metalmatze/transmission-exporter"
+	"github.com/kylegrantlucas/transmission-exporter"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

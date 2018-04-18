@@ -6,7 +6,7 @@ import (
 
 	arg "github.com/alexflint/go-arg"
 	"github.com/joho/godotenv"
-	transmission "github.com/metalmatze/transmission-exporter"
+	transmission "github.com/kylegrantlucas/transmission-exporter"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
@@ -15,6 +15,7 @@ type Config struct {
 	TransmissionAddr     string `arg:"env:TRANSMISSION_ADDR"`
 	TransmissionPassword string `arg:"env:TRANSMISSION_PASSWORD"`
 	TransmissionUsername string `arg:"env:TRANSMISSION_USERNAME"`
+	TransmissionBaseURL  string `arg:"env:TRANSMISSION_BASE_URL"`
 	WebAddr              string `arg:"env:WEB_ADDR"`
 	WebPath              string `arg:"env:WEB_PATH"`
 }
@@ -43,7 +44,7 @@ func main() {
 		}
 	}
 
-	client := transmission.New(c.TransmissionAddr, user)
+	client := transmission.New(c.TransmissionAddr, c.TransmissionBaseURL, user)
 
 	prometheus.MustRegister(NewTorrentCollector(client))
 	prometheus.MustRegister(NewSessionCollector(client))
