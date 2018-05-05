@@ -1,9 +1,10 @@
-FROM golang:latest as build
+FROM golang:1.10.1-alpine as builder
 WORKDIR /go/src/github.com/kylegrantlucas/transmission-exporter
 COPY . .
-RUN go build -o app ./cmd/transmission-exporter
+RUN go build -o /bin/application .
 
-FROM gcr.io/distroless/base
-COPY --from=build /go/src/github.com/kylegrantlucas/transmission-exporter /
+FROM alpine:latest
+WORKDIR /root
+COPY --from=builder /bin/application .
 EXPOSE 19091
-ENTRYPOINT ["/app"]
+ENTRYPOINT ["/root/application"]
